@@ -5,14 +5,20 @@ import ScanQR from "./ScanQR";
 function HomeScreen() {
   const [selectedPage, setSelectedPage] = useState<string>("home");
 
+  // Navigation items array
+  const navItems = [
+    { label: "Home", page: "home" },
+    { label: "Generate QR Code", page: "generate" },
+    { label: "Scan QR Code", page: "scan" },
+  ];
   // Render different components based on the selected page
   const renderPage = () => {
     switch (selectedPage) {
       case "generate":
         return <GenerateQR />;
       case "scan":
-        return "To be Implemented";
-        // return <ScanQR />;
+        // return "To be Implemented";
+        return <ScanQR />;
       default:
         return <div>Home Page</div>;
     }
@@ -26,30 +32,18 @@ function HomeScreen() {
       >
         <h3 className="p-3">QR Code App</h3>
         <ul className="nav flex-column">
-          <li className="nav-item">
-            <button
-              className="nav-link text-white"
-              onClick={() => setSelectedPage("home")}
-            >
-              Home
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className="nav-link text-white"
-              onClick={() => setSelectedPage("generate")}
-            >
-              Generate QR Code
-            </button>
-          </li>
-          <li className="nav-item">
-            <button
-              className="nav-link text-white"
-              onClick={() => setSelectedPage("scan")}
-            >
-              Scan QR Code
-            </button>
-          </li>
+          {navItems.map((item, index) => (
+            <li key={index} className="nav-item">
+              <button
+                className={`nav-link text-white ${
+                  selectedPage === item.page ? "active" : ""
+                }`}
+                onClick={() => setSelectedPage(item.page)}
+              >
+                {item.label}
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
 
